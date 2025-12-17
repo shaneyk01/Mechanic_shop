@@ -7,7 +7,7 @@ from app.models import Customer, ServiceTickets, db
 from app.extensions import limiter
 from app.utils.auth import encode_token, customer_token_required
 from app.blueprints.serviceTickets.schemas import service_tickets_schema
-
+from app.extensions import cache, limiter
 
 @customers_bp.route('/login', methods=['POST'])
 def login():
@@ -26,6 +26,7 @@ def login():
 
 
 @customers_bp.route('/', methods=['POST'])
+@limiter.limit("10 per minute")
 def create_customer():
     try:
         customer_data = customer_schema.load(request.json)
@@ -64,6 +65,7 @@ def get_customers():
  
 
 @customers_bp.route('/<int:customer_id>',methods=['GET'])
+@cache.cached(timeout=60)
 def get_a_customer(customer_id):
     customer=db.session.get(Customer, customer_id)
     if customer:

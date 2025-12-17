@@ -79,6 +79,7 @@ def update_mechanic(mechanic_id):
 
 
 @mechanics_bp.route('/<int:mechanic_id>', methods=['DELETE'])
+@mechanic_token_required
 def delete_mechanic(mechanic_id):
     try:
         mechanic = db.session.get(Mechanic, mechanic_id)

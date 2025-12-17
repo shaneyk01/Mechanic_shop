@@ -32,7 +32,7 @@ def token_required(f):
             return jsonify({'error': 'Token has expired!'}), 401
         return f(*args, **kwargs)
     return decorated
-
+#token required deorator for mechanics
 def mechanic_token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -50,18 +50,14 @@ def mechanic_token_required(f):
             return jsonify({'error': 'Token is invalid!'}), 401
         except jose.exceptions.ExpiredSignatureError:
             return jsonify({'error': 'Token has expired!'}), 401
-        # If the route already provided a mechanic_id (e.g. /mechanics/<id>),
-        # avoid passing duplicates and ensure the token matches the path param.
         route_mechanic_id = kwargs.get('mechanic_id')
         if route_mechanic_id is not None and int(route_mechanic_id) != request.mechanic_id:
             return jsonify({'error': 'Forbidden'}), 403
-
         if route_mechanic_id is None:
             kwargs['mechanic_id'] = request.mechanic_id
-
         return f(*args, **kwargs)
     return decorated
-
+#TOKEN REQUIRED DECORATOR FOR CUSTOMERS
 def customer_token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -79,8 +75,6 @@ def customer_token_required(f):
             return jsonify({'error': 'Token is invalid!'}), 401
         except jose.exceptions.ExpiredSignatureError:
             return jsonify({'error': 'Token has expired!'}), 401
-        # If the route already provided a customer_id (e.g. /customers/<id>),
-        # avoid passing duplicates and ensure the token matches the path param.
         route_customer_id = kwargs.get('customer_id')
         if route_customer_id is not None and int(route_customer_id) != request.customer_id:
             return jsonify({'error': 'Forbidden'}), 403
