@@ -9,4 +9,3 @@ class MechanicSchema(ma.SQLAlchemyAutoSchema):
         model = Mechanic # type: ignore
 mechanic_schema = MechanicSchema()
 mechanics_schema = MechanicSchema(many=True)
-login_schema = MechanicSchema(exclude=['name', 'salary'])
