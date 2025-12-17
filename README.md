@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Mechanic_shop
-=======
 # Mechanic Shop API
 
 Simple Flask REST API to manage customers, mechanics, and service tickets (with many-to-many assignment of mechanics to tickets).
@@ -90,8 +87,4 @@ Create service ticket:
 Add mechanic to ticket (PUT):
 ```
 /service_tickets/1/add_mechanic/2
-`-
-
-submitted by:shaney hoyohoy
-
->>>>>>> b51b795 (new)
+```
